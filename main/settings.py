@@ -26,7 +26,12 @@ SECRET_KEY = 'django-insecure-my6tfh9xe=#bs+omyl7*+&$2t4t)__uz^nii#v4$iaa!6flh^u
 DEBUG = True
 
 ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['swagger.uz']
 
+# ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '.ngrok-free.app', '404']
+
+# CSRF_TRUSTED_ORIGINS = ['https://118e-84-54-83-43.ngrok-free.app']
+# CSRF_TRUSTED_ORIGINS = ['https://118e-84-54-83-43.ngrok-free.app']
 
 # Application definition
 
@@ -37,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'app',
     'rest_framework',
     'drf_yasg',
@@ -45,6 +51,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -120,6 +127,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = 'static'
+# STATIC_ROOT = '/home/swaggeru/public_html/static'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
