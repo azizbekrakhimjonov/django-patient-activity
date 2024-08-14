@@ -50,6 +50,13 @@ INSTALLED_APPS = [
     'drf_yasg',
 ]
 
+JAZZMIN_UI_TWEAKS = {
+    "theme": "darkly",
+    # "dark_mode_theme": "darkly",
+    "dark_mode_theme": "slate",
+}
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
