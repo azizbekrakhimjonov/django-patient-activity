@@ -16,7 +16,7 @@ The Django Patient Activity Tracker is a RESTful API designed to register patien
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/ayubxontursunov/django-patient-activity.git
+    git clone https://github.com/azizbekrakhimjonov/django-patient-activity.git
     cd django-patient-activity
     ```
 
