@@ -67,16 +67,34 @@ class PatientViewSet(viewsets.ModelViewSet):
     def start(self, request, pk=None):
         patient = self.get_object()
         current_time = timezone.now().time()
-        activity, created = PatientActivity.objects.get_or_create(patient=patient, date=timezone.now().date())
-        activity.start_time = current_time
+
+        # Always create a new session entry for this patient on the same day
+        activity = PatientActivity.objects.create(
+            patient=patient,
+            date=timezone.now().date(),
+            start_time=current_time
+        )
         activity.save()
-        return Response(PatientActivitySerializer(activity).data, status=status.HTTP_200_OK)
+
+        return Response(PatientActivitySerializer(activity).data, status=status.HTTP_201_CREATED)
 
     @action(detail=True, methods=['post', 'get'])
     def end(self, request, pk=None):
         patient = self.get_object()
         current_time = timezone.now().time()
-        activity, created = PatientActivity.objects.get_or_create(patient=patient, date=timezone.now().date())
-        activity.end_time = current_time
-        activity.save()
-        return Response(PatientActivitySerializer(activity).data, status=status.HTTP_200_OK)
+
+        try:
+            # Find the most recent session for this patient on this date that doesn't have an end time
+            activity = PatientActivity.objects.filter(
+                patient=patient,
+                date=timezone.now().date(),
+                end_time__isnull=True  # Ensure we pick an open session
+            ).latest('start_time')  # Get the latest session by start time
+
+            activity.end_time = current_time
+            activity.save()
+
+            return Response(PatientActivitySerializer(activity).data, status=status.HTTP_200_OK)
+
+        except PatientActivity.DoesNotExist:
+            return Response({'detail': 'No active session found to end.'}, status=status.HTTP_400_BAD_REQUEST)
