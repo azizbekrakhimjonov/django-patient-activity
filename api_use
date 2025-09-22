@@ -1,0 +1,23 @@
+import requests
+
+BASE_URL = "http://weep.uz/"  
+MOBILE_NUMBER = "932608005"
+
+
+# Start activity
+def start_activity():
+    url = BASE_URL + f"patients/start/{MOBILE_NUMBER}"
+    r = requests.post(url)
+    print("START ACTIVITY:", r.status_code, r.json())
+
+
+# End activity
+def end_activity():
+    url = BASE_URL + f"patients/end/{MOBILE_NUMBER}"
+    r = requests.post(url)
+    print("END ACTIVITY:", r.status_code, r.json())
+
+
+if __name__ == "__main__":
+    # start_activity()
+    end_activity()
